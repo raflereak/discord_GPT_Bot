@@ -1,0 +1,16 @@
+{
+    "used_db" : true,
+    "token" : 
+    {
+        "discord_bot_token" : "",
+        "chatGPT_API_token" : ""
+    },
+    "database" : 
+    {
+        "host" : "",
+        "port" : "",
+        "user" : "",
+        "password" : "",
+        "database" : ""
+    }
+}
