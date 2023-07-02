@@ -11,7 +11,7 @@
 - not used database(csv)
 
 ## 0.1 ver
-- 
+- can multi processing
 
 ## 0.2 ver
 - make setup.ipynb
