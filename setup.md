@@ -4,6 +4,8 @@
 - python3
 - pip3
 
+
+# how to install
 - make a database
 - install library
 ```cmd
