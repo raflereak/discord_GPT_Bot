@@ -59,20 +59,26 @@ async def on_message(message):
         resetCNT = user_data[3]
 
     if message.content.lower() == '!help':
-        await message.channel.send('''
-        # Thank you for visiting our chatbot.
+        embed = discord.Embed(
+            title="# Thank you for visiting our chatbot",
+            description='''
+            > !help
+            - show command list
 
-        > !help
-        - show command list
+            > !chat
+            - turn on chatbot
+            - turn off chatbot
 
-        > !chat
-        - turn on chatbot
-        - turn off chatbot
+            > !reset
+            - reset dialog
+            - can you start new chat session
+            ''',
+            color=discord.Color.blue()
+        )
+        embed.add_field(name="!help", value="Field Value", inline=False)
+        embed.set_footer(text="Embed Footer")
 
-        > !reset
-        - reset dialog
-        - can you start new chat session
-        ''')
+        await message.channel.send(embed=embed)
 
     if message.content.lower() == '!chat':
         if user_data[4] == 0: # false
