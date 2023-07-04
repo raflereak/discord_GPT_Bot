@@ -58,6 +58,22 @@ async def on_message(message):
     else:
         resetCNT = user_data[3]
 
+    if message.content.lower() == '!help':
+        await message.channel.send('''
+        # Thank you for visiting our chatbot.
+
+        > !help
+        - show command list
+
+        > !chat
+        - turn on chatbot
+        - turn off chatbot
+
+        > !reset
+        - reset dialog
+        - can you start new chat session
+        ''')
+
     if message.content.lower() == '!chat':
         if user_data[4] == 0: # false
             cursor.execute("UPDATE userData SET useState = 1 WHERE user_id = %s", (str(message.author.id),))
