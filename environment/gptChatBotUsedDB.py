@@ -67,17 +67,13 @@ async def on_message(message):
             color=discord.Color.blue()
         )
         embed.add_field(name="!help", value="- show command list", inline=False)
-        embed.add_field(name="!chat", value='''
-        - turn on chatbot
-        - turn off chatbot
+        embed.add_field(name="!chat", value='''- turn on chatbot \n- turn off chatbot
         ''', inline=False)
         embed.add_field(name="!reset", value='''
-        - reset dialog
-        - can you start new chat session
+        - reset dialog \n- can you start new chat session
         ''', inline=False)
-        embed.add_field(name="version", value="alpha ver", inline=True)
-        embed.set_footer(text="[Visit GitHub](https://github.com/raflereak/discord_GPT_Bot)")
-
+        embed.add_field(name="Version", value="alpha.ver", inline=True)
+        embed.add_field(name="[Visit GitHub](https://github.com/raflereak/discord_GPT_Bot)", inline=False)
 
         await message.channel.send(embed=embed)
 
