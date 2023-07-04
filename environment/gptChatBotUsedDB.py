@@ -8,7 +8,7 @@ import os
 nowdir = os.getcwd()
 
 # OpenAI API 인증
-with open(nowdir + '/envrionment/setting.json' , 'r') as f:
+with open(nowdir + '/environment/setting.json' , 'r') as f:
     envData = json.load(f)
 
 
