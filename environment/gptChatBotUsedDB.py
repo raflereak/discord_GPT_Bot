@@ -73,7 +73,7 @@ async def on_message(message):
         - reset dialog \n- can you start new chat session
         ''', inline=False)
         embed.add_field(name="Version", value="alpha.ver", inline=True)
-        embed.add_field(name="[Visit GitHub](https://github.com/raflereak/discord_GPT_Bot)", inline=False)
+        embed.add_field(name="[Visit GitHub](https://github.com/raflereak/discord_GPT_Bot)", value="", inline=False)
 
         await message.channel.send(embed=embed)
 
