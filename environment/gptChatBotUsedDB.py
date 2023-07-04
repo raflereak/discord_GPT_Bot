@@ -62,21 +62,22 @@ async def on_message(message):
         embed = discord.Embed(
             title="# Thank you for visiting our chatbot",
             description='''
-            > !help
-            - show command list
 
-            > !chat
-            - turn on chatbot
-            - turn off chatbot
-
-            > !reset
-            - reset dialog
-            - can you start new chat session
             ''',
             color=discord.Color.blue()
         )
-        embed.add_field(name="!help", value="Field Value", inline=False)
-        embed.set_footer(text="Embed Footer")
+        embed.add_field(name="!help", value="- show command list", inline=False)
+        embed.add_field(name="!chat", value='''
+        - turn on chatbot
+        - turn off chatbot
+        ''', inline=False)
+        embed.add_field(name="!reset", value='''
+        - reset dialog
+        - can you start new chat session
+        ''', inline=False)
+        embed.add_field(name="version", value="alpha ver", inline=True)
+        embed.set_footer(text="[Visit GitHub](https://github.com/raflereak/discord_GPT_Bot)")
+
 
         await message.channel.send(embed=embed)
 
