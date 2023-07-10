@@ -187,7 +187,11 @@ async def on_message(message):
     tempText.append(('assistant', answer))
 
     # 답변을 디스코드 채널로 전송
-    await message.channel.send(answer)
+    try:
+        await message.channel.send(answer)
+    except:
+        await message.channel.send('The length of the answer is too long. Please visit the chatgpt site and use it. Visit to Site : https://chat.openai.com/')
+
 
     # 대화 내용 저장
     values = [(str(message.author.id), role, chat, resetCNT) for role, chat in tempText]
