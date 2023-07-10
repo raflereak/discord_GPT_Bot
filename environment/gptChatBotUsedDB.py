@@ -14,16 +14,7 @@ with open(nowdir + '/environment/setting.json' , 'r') as f:
 
 openai.api_key = envData['token']['chatGPT_API_token']
 
-# MySQL 연결 및 테이블 생성
-connection = mysql.connector.connect(
-    host=envData['database']['host'],
-    port=envData['database']['port'],
-    user=envData['database']['user'],
-    password=envData['database']['password'],
-    database=envData['database']['database']
-)
 
-cursor = connection.cursor()
 
 # 디스코드 봇 설정
 intents = discord.Intents.default()
@@ -40,8 +31,19 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
+    # MySQL 연결 및 테이블 생성
+    connection = mysql.connector.connect(
+        host=envData['database']['host'],
+        port=envData['database']['port'],
+        user=envData['database']['user'],
+        password=envData['database']['password'],
+        database=envData['database']['database']
+    )
+
+    cursor = connection.cursor()
     # 봇이 보낸 메시지는 무시
     if message.author.bot:
+        connection.close()
         return
     
     # 사용자 정보 조회
@@ -54,6 +56,7 @@ async def on_message(message):
     if user_data is None:
         cursor.execute("INSERT INTO userData (user_id, username, reset_count, useState) VALUES (%s, %s, 0, False)", (str(message.author.id), str(message.author.name)))
         connection.commit()
+        connection.close()
         return
     else:
         resetCNT = user_data[3]
@@ -106,21 +109,28 @@ async def on_message(message):
         embed.add_field(name="GitHub", value="[Visit GitHub](https://github.com/raflereak/discord_GPT_Bot)", inline=False)
 
         await message.channel.send(embed=embed)
+        connection.close()
+        return
 
     if message.content.lower() == '!chat':
         if user_data[4] == 0: # false
             cursor.execute("UPDATE userData SET useState = 1 WHERE user_id = %s", (str(message.author.id),))
             connection.commit()
             await message.channel.send("Turn on ChatBot.")
+            connection.close()
+            return
 
         elif user_data[4] == 1: # true
             cursor.execute("UPDATE userData SET useState = 0 WHERE user_id = %s", (str(message.author.id),))
             connection.commit()
             await message.channel.send("Turn off ChatBot")
+            connection.close()
+            return
 
         else: # error
             cursor.execute("UPDATE userData SET useState = 0 WHERE user_id = %s", (str(message.author.id),))
             connection.commit()
+            connection.close()
         return
         
     if message.content.lower() == '!reset':
@@ -133,10 +143,12 @@ async def on_message(message):
         # connection.commit()
 
         await message.channel.send("Your chat session is reset")
+        connection.close()
         return
 
 
     if user_data[4] == 0: # 사용 상태 체크
+        connection.close()
         return
 
     async with message.channel.typing():
@@ -181,6 +193,7 @@ async def on_message(message):
     values = [(str(message.author.id), role, chat, resetCNT) for role, chat in tempText]
     cursor.executemany("INSERT INTO chat_logs (user_id, role, message, resetCount) VALUES (%s, %s, %s, %s)", values)
     connection.commit()
+    connection.close()
 
 
 # 디스코드 봇 실행
